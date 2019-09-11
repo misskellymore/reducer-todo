@@ -1,34 +1,45 @@
 import React, {useState} from 'react';
 
-const Todoform = () => {
+const Todoform = props => {
 
-    const [input, setInput] = useState({
-        todos: [
+    const [input, setInput] = useState({        
 
-            {   item: 'Learn about reducers',
+                item: "",
                 completed: false,
-                id: 3892987589
-              }
-        ]
+                id: null              
+
     });
 
-    const handleChange = e =>{
+    const handleChange = e => {
 
         setInput({
             ...input,
-            item: e.target.value
+            item: e.target.value,
+            id: Date.now()
         });
     };
 
     console.log('input', input);
 
+    const addTodo = e => {
+        e.preventDefault();
+        props.addTodo(input);
+        setInput({
+                item: "",
+                completed: false,
+                id: null
+        });
+    };
+
         return (
-            <form>
+            
+            <form onSubmit={addTodo} >
                <input value={input.item}
                       onChange={handleChange}
                       type="text" />
                <button>Add Task</button>
             </form>
+            
         )
     
 
